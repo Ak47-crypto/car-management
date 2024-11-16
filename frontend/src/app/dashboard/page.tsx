@@ -52,7 +52,7 @@ const Dashboard = () => {
             setToken(localStorage.getItem('token'))
             
             try {
-                const response = await fetch('http://localhost:3001/api/fetch',{
+                const response = await fetch('https://car-management-server-amber.vercel.app/api/fetch',{
                     method:"POST",
                     headers:{
                         "CONTENT-TYPE":"application/json"
@@ -142,7 +142,7 @@ const Dashboard = () => {
 try {
     
 
-    const response = await fetch('http://localhost:3001/api/upload',{
+    const response = await fetch('https://car-management-server-amber.vercel.app/api/upload',{
         method:"POST",
         // headers:{
         //     "CONTENT-TYPE":"application/json"
@@ -190,7 +190,7 @@ try {
     try {
     
 
-        const response = await fetch('http://localhost:3001/api/update',{
+        const response = await fetch('https://car-management-server-amber.vercel.app/api/update',{
             method:"POST",
             headers:{
                 "CONTENT-TYPE":"application/json"
@@ -244,7 +244,7 @@ try {
     try {
     
 
-        const response = await fetch('http://localhost:3001/api/delete',{
+        const response = await fetch('https://car-management-server-amber.vercel.app/api/delete',{
             method:"POST",
             headers:{
                 "CONTENT-TYPE":"application/json"

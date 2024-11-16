@@ -24,7 +24,7 @@ const Navbar = () => {
         }
         const handleFetchUser = async()=>{
             try {
-                const response = await fetch('http://localhost:3001/api/fetchUser',{
+                const response = await fetch('https://car-management-server-amber.vercel.app/api/fetchUser',{
                     method:"POST",
                     headers:{
                         "CONTENT-TYPE":"application/json"
