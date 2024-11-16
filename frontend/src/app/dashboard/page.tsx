@@ -22,7 +22,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { PlusCircle, Edit, Trash2 } from "lucide-react";
+import { PlusCircle, Edit, Trash2, Loader2 } from "lucide-react";
 import Image from "next/image";
 import { toast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
@@ -95,10 +95,12 @@ const Dashboard = () => {
         router.replace('/')
     },[])
 
-
-
+  const [isDeleting,setIsDeleting]=useState<boolean>(false)
+  const [isUploading,setIsUploading]=useState<boolean>(false)
+  const [isEditing,setIsEditing]=useState<boolean>(false)
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
+  const [selectedFiles, setSelectedFiles] = useState<string[] | null>(null);
   const [selectedProduct, setSelectedProduct] = useState<IProduct >(
     {
         _id: "",
@@ -116,9 +118,14 @@ const Dashboard = () => {
     image: [],
   });
 
-  const handleImageChange = (event:any) => {
-    setFile(event.target.files);
-    console.log(event.target.files[0]);
+  const handleImageChange = (e:any) => {
+    if (e.target.files) {
+      setFile(e.target.files);
+      console.log(e.target.files[0]);
+      const filesArray = Array.from(e.target.files).map((file:any) => file.name);
+      setSelectedFiles(filesArray);
+    }
+    
     
     
   };
@@ -141,7 +148,7 @@ const Dashboard = () => {
     
 try {
     
-
+    setIsUploading(true)
     const response = await fetch('https://car-management-server-amber.vercel.app/api/upload',{
         method:"POST",
         // headers:{
@@ -181,6 +188,8 @@ try {
     } catch (error) {
         console.log(error);
         
+    }finally{
+      setIsUploading(false);
     }
     
   };
@@ -189,7 +198,7 @@ try {
     
     try {
     
-
+      setIsEditing(true)
         const response = await fetch('https://car-management-server-amber.vercel.app/api/update',{
             method:"POST",
             headers:{
@@ -233,6 +242,7 @@ try {
             console.log(error);
             
         }finally{
+          setIsEditing(false)
     setIsEditDialogOpen(false);
     setSelectedProduct({ _id:"",title: "", description: "", tag: [],image:[] });
         }
@@ -243,7 +253,7 @@ try {
 
     try {
     
-
+      setIsDeleting(true)
         const response = await fetch('https://car-management-server-amber.vercel.app/api/delete',{
             method:"POST",
             headers:{
@@ -281,6 +291,8 @@ try {
         } catch (error) {
             console.log(error);
             
+        }finally{
+          setIsDeleting(false)
         }
   };
 
@@ -344,8 +356,9 @@ try {
                   />
                 </div>
                 <div>
-                  <Label htmlFor="image">Image</Label>
+                  <Label htmlFor="image">{`Image (Max 10 images)`}</Label>
                   <Input
+                    placeholder="Max 10 images"
                     id="image"
                     type="file"
                     accept="image/*"
@@ -353,11 +366,19 @@ try {
                     multiple
                     onChange={handleImageChange}
                   />
+                  
                  
                 </div>
               </div>
               <DialogFooter>
-                <Button onClick={handleAddProduct}>Add Product</Button>
+                {
+                  isUploading?(
+                    <Button onClick={handleAddProduct} disabled><Loader2 className=" animate-spin"/> Adding</Button>
+                  ):(
+                    <Button onClick={handleAddProduct} >Add Product</Button>
+                  )
+                }
+                
               </DialogFooter>
             </DialogContent>
           </Dialog>
@@ -396,6 +417,7 @@ try {
                       variant="ghost"
                       size="icon"
                       onClick={() => handleDeleteProduct(product._id?product._id:"")}
+                      disabled={isDeleting}
                     >
                       <Trash2 className="h-4 w-4" />
                     </Button>
@@ -462,7 +484,14 @@ try {
               </div>
             )}
             <DialogFooter>
-              <Button onClick={handleEditProduct}>Save Changes</Button>
+            {
+                  isEditing?(
+                    <Button onClick={handleAddProduct} disabled><Loader2 className=" animate-spin"/> Saving</Button>
+                  ):(
+                    <Button onClick={handleEditProduct} >Save Changes</Button>
+                  )
+                }
+              
             </DialogFooter>
           </DialogContent>
         </Dialog>
