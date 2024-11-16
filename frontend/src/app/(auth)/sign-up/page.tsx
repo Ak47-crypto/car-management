@@ -65,7 +65,7 @@ const { toast } = useToast()
     try {
       
       
-      const response = await fetch('https://car-management-server-amber.vercel.app/api/login',{
+      const response = await fetch('https://car-management-server-amber.vercel.app/api/createUser',{
         method:"POST",
         headers:{
             "CONTENT-TYPE":"application/json"
