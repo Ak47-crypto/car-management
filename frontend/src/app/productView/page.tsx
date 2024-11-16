@@ -211,7 +211,7 @@ const ProductView = () => {
 // export const dynamic = "force-dynamic";
 
 // export default ProductView;
-export function Searchbar() {
+export default function Searchbar() {
   return (
     // You could have a loading skeleton as the `fallback` too
     <Suspense>
