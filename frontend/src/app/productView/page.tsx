@@ -210,7 +210,7 @@ const ProductView = () => {
 };
 // export const dynamic = "force-dynamic";
 
-export default ProductView;
+// export default ProductView;
 export function Searchbar() {
   return (
     // You could have a loading skeleton as the `fallback` too
