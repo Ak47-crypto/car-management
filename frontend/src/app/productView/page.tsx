@@ -7,6 +7,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Suspense } from 'react'
 import {
   Carousel,
   CarouselContent,
@@ -207,5 +208,14 @@ const ProductView = () => {
     </div>
   );
 };
+// export const dynamic = "force-dynamic";
 
 export default ProductView;
+export function Searchbar() {
+  return (
+    // You could have a loading skeleton as the `fallback` too
+    <Suspense>
+      <ProductView />
+    </Suspense>
+  )
+}
