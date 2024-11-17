@@ -13,7 +13,7 @@ import Image from "next/image";
 
 const Home = () => {
   const carImages = [
-    "/car1.svg",  // Replace with your actual image paths
+    "/car1.svg",  
     "/car2.svg",
     "/car3.svg",
     "/car4.svg",
