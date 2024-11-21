@@ -1,4 +1,4 @@
-> **Car** **Management** **System**
+> # Car Management System
 
 This Car Management System allows users to register, log in, and manage
 a catalog of cars with details like images, titles, descriptions, and
